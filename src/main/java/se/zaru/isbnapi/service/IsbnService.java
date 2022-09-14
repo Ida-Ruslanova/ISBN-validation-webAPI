@@ -16,7 +16,7 @@ public class IsbnService extends Validator {
 
     @Override
     public boolean isValid(String isbn) {
-        if (isbn.isEmpty() || isbn.matches("[0-9]") || (isbn.length() != 10 && isbn.length() != 13)) {
+        if (isbn == null || isbn.matches("[0-9]") || (isbn.length() != 10 && isbn.length() != 13)) {
             return false;
         }
         if (isbn.length() == 13) {
@@ -28,17 +28,22 @@ public class IsbnService extends Validator {
         }
     }
 
-    private boolean isValidISBNNumber13(String isbn) {
+    public boolean isValidISBNNumber13(String isbn) {
         int sum = 0;
-        for (int i = 0; i < 12; i++) {
-            int digit = Integer.parseInt(isbn.substring(i, i + 1));
-            sum += (i % 2 == 0) ? digit * 1 : digit * 3;
+        try {
+            for (int i = 0; i < 12; i++) {
+                int digit = Integer.parseInt(isbn.substring(i, i + 1));
+                sum += (i % 2 == 0) ? digit * 1 : digit * 3;
+            }
+            int checksum = 1 - (sum % 10);
+            return checksum == 1;
+        } catch (NumberFormatException exception) {
+            log.error("ISBN: " + isbn + " contains a letter" + exception.getMessage());
+            return false;
         }
-        int checksum = 1 - (sum % 10);
-        return checksum == 1;
     }
 
-    private boolean isValidISBNNumber10(String isbn) {
+    public boolean isValidISBNNumber10(String isbn) {
         int sum = 0;
         for (int i = 0; i < 9; i++) {
             int digit = isbn.charAt(i) - '0';
@@ -51,7 +56,6 @@ public class IsbnService extends Validator {
             return false;
         sum += ((last == 'X') ? 10 : (last - '0'));
         return (sum % 11 == 0);
-
     }
 
     public ResponseEntity< String > getResultOfValidation(ISBN isbnToValidate) {
