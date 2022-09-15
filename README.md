@@ -1,13 +1,19 @@
 # ISBN-validation-webAPI
-Ett web-API som kan validera ISBN 10 och ISBN 13.
+Web-API which can validate ISBN 10 & ISBN 13.
 
 Spring boot application 
 
-Java-16
+Java-18
 Lombok
 Junit5
 
 # How to run application
 
-#!/bin/sh
+# 1) You need to run shell script isbn-execute.sh to build and run jar file
+
+sh isbn-execute.sh
+
+# 2) You need to run the second shell file curl to execute endpoints
+
+sh curl.sh
 

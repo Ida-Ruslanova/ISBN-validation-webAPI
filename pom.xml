@@ -14,7 +14,7 @@
 	<name>isbnapi</name>
 	<description>web-API which kan validate ISBN10 and ISBN13</description>
 	<properties>
-		<java.version>16</java.version>
+		<java.version>18</java.version>
 	</properties>
 	<dependencies>
 		<dependency>
